@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HelloWorldPlugin = require('./plugins/HelloWorldPlugin');
 
 module.exports = {
   mode: 'development',
@@ -11,17 +12,22 @@ module.exports = {
   devServer: {
     contentBase: './dist',
   },
+  resolveLoader: {
+    modules: ['node_modules', './loaders'],
+  },
   module: {
     rules: [
       {
         test: /\.s?css$/,
         use: [
-          {
-            loader: path.resolve(__dirname, 'loaders', 'style-loader.js'),
-          },
-          {
-            loader: path.resolve(__dirname, 'loaders', 'sass-loader'),
-          },
+          'style-loader',
+          'sass-loader',
+          // {
+          //   loader: path.resolve(__dirname, 'loaders', 'style-loader.js'),
+          // },
+          // {
+          //   loader: path.resolve(__dirname, 'loaders', 'sass-loader'),
+          // },
         ],
       },
     ],
@@ -32,5 +38,6 @@ module.exports = {
       inject: 'body',
       scriptLoading: 'blocking',
     }),
+    new HelloWorldPlugin({ options: true }),
   ],
 };
