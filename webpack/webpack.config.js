@@ -14,10 +14,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.s?css$/,
         use: [
           {
             loader: path.resolve(__dirname, 'loaders', 'style-loader.js'),
+          },
+          {
+            loader: path.resolve(__dirname, 'loaders', 'sass-loader'),
           },
         ],
       },
