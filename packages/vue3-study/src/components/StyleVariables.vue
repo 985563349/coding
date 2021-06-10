@@ -20,6 +20,7 @@ const changeColor = () => {
 
 <style scoped>
 h2 {
+  /* 使用v-bind可将响应式数据绑定至css */
   color: v-bind(color);
 }
 

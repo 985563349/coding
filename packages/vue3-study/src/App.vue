@@ -3,11 +3,25 @@
     <h1>App</h1>
     <p>hello vue3</p>
     <hr />
+
     <RefSugar />
     <hr />
+
     <StyleVariables />
     <hr />
-    <Lifecycle />
+
+    <Lifecycle v-if="visible" />
+
+    <button @click="() => (visible = !visible)">
+      {{ visible ? 'hidden' : 'show' }}
+    </button>
+    <hr />
+
+    <Reactive />
+    <hr />
+
+    <ToRefs />
+    <hr />
   </div>
 </template>
 
@@ -15,6 +29,10 @@
 import RefSugar from './components/RefSugar.vue';
 import StyleVariables from './components/StyleVariables.vue';
 import Lifecycle from './components/Lifecycle.vue';
+import Reactive from './components/Reactive.vue';
+import ToRefs from './components/ToRefs.vue';
+
+ref: visible = true;
 </script>
 
 <style>

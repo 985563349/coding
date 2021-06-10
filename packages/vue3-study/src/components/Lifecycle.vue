@@ -1,7 +1,7 @@
 <template>
   <h2>Lifecycle Hooks</h2>
   <button @click="add">count: {{ count }}</button>
-  <button>unmounted</button>
+  <button @click="throwError">throw error</button>
 </template>
 
 <script setup>
@@ -12,6 +12,7 @@ import {
   onUpdated,
   onBeforeUnmount,
   onUnmounted,
+  onErrorCaptured,
 } from 'vue';
 
 ref: count = 0;
@@ -20,7 +21,9 @@ const add = () => {
   count++;
 };
 
-const unmounted = () => {};
+const throwError = () => {
+  throw Error('error');
+};
 
 onBeforeMount(() => {
   console.log('%cbefore mount', 'color: red');
@@ -38,6 +41,11 @@ onUpdated(() => {
   console.log('%cupdated', 'color: green');
 });
 
+onErrorCaptured(() => {
+  // 无法捕获组件自身错误
+  console.log('%ccaptrued', 'color: red');
+});
+
 onBeforeUnmount(() => {
   console.log('%cbefore unmount', 'color: red');
 });
@@ -46,3 +54,9 @@ onUnmounted(() => {
   console.log('%cunmounted', 'color: green');
 });
 </script>
+
+<style scoped>
+button {
+  margin-right: 10px;
+}
+</style>
