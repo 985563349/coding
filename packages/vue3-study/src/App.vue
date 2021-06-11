@@ -22,6 +22,8 @@
 
     <ToRefs />
     <hr />
+
+    <Watch />
   </div>
 </template>
 
@@ -31,6 +33,7 @@ import StyleVariables from './components/StyleVariables.vue';
 import Lifecycle from './components/Lifecycle.vue';
 import Reactive from './components/Reactive.vue';
 import ToRefs from './components/ToRefs.vue';
+import Watch from './components/Watch.vue';
 
 ref: visible = true;
 </script>

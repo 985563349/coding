@@ -1,6 +1,6 @@
 <template>
   <h2>toRefs</h2>
-  <p style="color: orange">like: {{ JSON.stringify(like) }} 🍊</p>
+  <p style="color: orange">like: {{ like }} 🍊</p>
   <button @click="age++">increment1</button>
   <button @click="ageRef++">increment2</button>
 </template>

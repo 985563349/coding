@@ -2,7 +2,7 @@
   <h2>Reactive</h2>
   <p>count: {{ count }}</p>
   <p>numeral: {{ numeral }}</p>
-  <p style="color: orange">like: {{ JSON.stringify(like) }} 🍊</p>
+  <p style="color: orange">like: {{ like }} 🍊</p>
   <p>set: {{ set }}</p>
   <p>map: {{ map }}</p>
   <p>fnc: {{ fnc.value }}</p>
