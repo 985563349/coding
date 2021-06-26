@@ -1,0 +1,36 @@
+.form-field {
+  display: flex;
+  align-items: center;
+  padding: 4px 6px;
+}
+
+.form__input {
+  border: 1px solid #e3e3e3;
+  flex: 1;
+}
+
+.form__button {
+  margin: 0 6px;
+}
+
+.todos {
+  margin-top: 24px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.todo-item__text {
+  flex: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.todo-item__text--done {
+  text-decoration: line-through;
+}

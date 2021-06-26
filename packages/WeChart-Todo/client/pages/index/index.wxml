@@ -1,0 +1,19 @@
+<view>
+  <form class="form" catchsubmit="addTodo">
+    <view class="form-field">
+      <input value="{{text}}" class="form__input" bindinput="handleInput" />
+      <button class="form__button" size="mini" formType="submit">add</button>
+    </view>
+  </form>
+
+  <view class="todos">
+    <view class="todo-item" wx:for="{{todos}}" wx:for-item="todo">
+      <checkbox-group bindchange="updateTodo" data-id="{{todo._id}}">
+        <checkbox class="todo-item__checkbox" checked="{{todo.done}}" /> 
+      </checkbox-group>
+
+      <view class="todo-item__text {{ todo.done ? 'todo-item__text--done' : '' }}">{{ todo.content }}</view>
+      <button class="todo-item__button" size="mini" data-id="{{todo._id}}" bindtap="deleteTodo">delete</button>
+    </view>
+  </view>
+</view>
