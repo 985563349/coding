@@ -1,11 +1,13 @@
 Function.prototype.myBind = function (context, ...rest) {
-  const that = this;
+  const self = this;
+  context = context || window;
 
-  return function () {
-    const fn = Symbol('fn');
-    context[fn] = that;
-    const result = context[fn](...rest, ...arguments);
-    delete context[fn];
-    return result;
+  return function fBind() {
+    // 如果使用new调用，那么this指向fBind实例，实例作为this传入。
+    return self.call(
+      this instanceof fBind ? this : context,
+      ...rest,
+      ...arguments
+    );
   };
 };
