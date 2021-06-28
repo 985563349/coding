@@ -1,4 +1,4 @@
-const Stack = require('./栈');
+const Stack = require('./stack');
 
 // 题一：十进制转二进制
 function decimalToBinary(number) {
