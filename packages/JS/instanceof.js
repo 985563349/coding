@@ -4,9 +4,7 @@ function myInstanceof(A, B) {
 
   while (true) {
     if (__proto__ === null) return false;
-
     if (__proto__ === prototype) return true;
-
     __proto__ = __proto__.__proto__;
   }
 }
