@@ -1,6 +1,6 @@
 const Stack = require('./stack');
 
-// 题一：十进制转二进制
+// 十进制转二进制
 function decimalToBinary(number) {
   const stack = new Stack();
   let result = '';
@@ -19,7 +19,7 @@ function decimalToBinary(number) {
 
 console.log(decimalToBinary(11));
 
-// 题二：十进制转二、八、十六进制
+// 十进制转二、八、十六进制
 function converter(number, bs) {
   const stack = new Stack();
   const digits = '0123456789ABCDEF';
@@ -42,7 +42,7 @@ console.log(converter(100, 8));
 console.log(converter(100, 16));
 
 /**
- * 题三：有效的括号
+ * 有效的括号
  *
  *  给定一个只包括 小括号 ( ) ，中括号 [ ] 大括号 { } 的字符串，判断字符串是否有效。
  *
