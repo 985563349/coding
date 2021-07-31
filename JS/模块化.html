@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="模块化" />
+    <meta name="description" content="模块化" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>模块化</title>
+  </head>
+  <body>
+    <script>
+      // 需求：每隔一秒，body背景就随一个数字的递增在三种颜色中切换
+
+      // 状态管理器
+      var module_state = (function () {
+        var state = { number: 0, color: null };
+
+        return {
+          get: function (prop) {
+            return state[prop];
+          },
+          set: function (prop, value) {
+            state[prop] = value;
+          },
+        };
+      })();
+
+      // 颜色切换模块
+      var module_color = (function () {
+        var state = module_state;
+        var colors = ['red', 'green', 'yellow'];
+
+        return {
+          render: function () {
+            var color = colors[state.get('number') % 3];
+            document.body.style.backgroundColor = color;
+          },
+        };
+      })();
+
+      // 内容显示模块
+      var module_content = (function () {
+        var state = module_state;
+
+        return {
+          render: function () {
+            document.body.innerText = 'this Number is ' + state.get('number');
+          },
+        };
+      })();
+
+      // 调度模块
+      (function () {
+        var state = module_state;
+        var color = module_color;
+        var content = module_content;
+
+        setInterval(function () {
+          // 渲染
+          color.render();
+          content.render();
+
+          var newNumber = state.get('number') + 1;
+          state.set('number', newNumber);
+        }, 1000);
+      })();
+    </script>
+  </body>
+</html>
