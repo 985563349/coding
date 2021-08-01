@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="拖拽插件" />
+    <meta name="description" content="拖拽插件" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>拖拽插件</title>
+    <style>
+      #box {
+        width: 100px;
+        height: 100px;
+        background-color: orange;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box"></div>
+
+    <script>
+      (function (ROOT) {
+        function Drag(element) {
+          this.ele =
+            typeof element === 'object'
+              ? element
+              : document.querySelector(element);
+          this.startX = 0;
+          this.startY = 0;
+          this.sourceX = 0;
+          this.sourceY = 0;
+
+          this.init();
+        }
+
+        Drag.prototype = {
+          constructor: Drag,
+
+          init() {
+            var that = this;
+
+            function start(event) {
+              that.startX = event.pageX;
+              that.startY = event.pageY;
+              var point = that.getPosition();
+              that.sourceX = point.x;
+              that.sourceY = point.y;
+
+              document.addEventListener('mousemove', move, false);
+              document.addEventListener('mouseup', end, false);
+            }
+
+            function move(event) {
+              var pageX = event.pageX;
+              var pageY = event.pageY;
+
+              const distanceX = pageX - that.startX;
+              const distanceY = pageY - that.startY;
+
+              that.setPosition({
+                x: (that.sourceX + distanceX).toFixed(2),
+                y: (that.sourceY + distanceY).toFixed(2),
+              });
+            }
+
+            function end() {
+              document.removeEventListener('mousemove', move, false);
+              document.removeEventListener('mouseup', end, false);
+            }
+
+            this.ele.addEventListener('mousedown', start, false);
+          },
+
+          getStyle(property) {
+            return document.defaultView.getComputedStyle(this.ele)[property];
+          },
+
+          setPosition(position) {
+            if (this.getStyle('position') === 'static') {
+              this.ele.style.position = 'relative';
+            }
+
+            this.ele.style.left = position.x + 'px';
+            this.ele.style.top = position.y + 'px';
+          },
+
+          getPosition() {
+            var x = parseInt(this.getStyle('left')) || 0;
+            var y = parseInt(this.getStyle('top')) || 0;
+
+            return { x: x, y: y };
+          },
+        };
+
+        ROOT.Drag = Drag;
+      })(window);
+    </script>
+    <script>
+      var drag = new Drag('#box');
+    </script>
+  </body>
+</html>
