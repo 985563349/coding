@@ -1,3 +1,8 @@
+/**
+ * 什么是thunk函数？
+ *  thunk函数可以将多参数函数，替换成单参数函数的版本，且只接受回调函数作为参数。
+ */
+
 // 简单版
 function thunk(fn) {
   return function (...args) {
