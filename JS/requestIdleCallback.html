@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="requestIdleCallback" />
+    <meta name="description" content="requestIdleCallback" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>requestIdleCallback</title>
+  </head>
+  <body>
+    <script>
+      // 任务队列
+      const works = [
+        () => {
+          console.log('任务1开始');
+          console.log('任务1结束');
+        },
+        () => {
+          console.log('任务2开始');
+          console.log('任务2结束');
+        },
+        () => {
+          console.log('任务3开始');
+          console.log('任务3结束');
+        },
+        () => {
+          console.log('任务4开始');
+          sleep(20);
+          console.log('任务4结束');
+        },
+        () => {
+          console.log('任务5开始');
+          sleep(20);
+          console.log('任务5结束');
+        },
+      ];
+
+      /**
+       * sleep 睡眠函数
+       * @param {number} timeout 睡眠时间 ms
+       */
+      function sleep(timeout) {
+        const start = Date.now();
+
+        while (start + timeout > Date.now()) {
+          // sleep...
+        }
+      }
+
+      // 执行调度单元
+      function performUnitOfWork() {
+        works.shift()?.();
+      }
+
+      function workLoop(idleDeadline) {
+        console.log('任务执行前，帧剩余时间：', idleDeadline.timeRemaining());
+
+        // 检查当前帧是否存在空闲时间，或任务是否已经超时
+        if (
+          (idleDeadline.timeRemaining() > 0 || idleDeadline.didTimeout) &&
+          works.length
+        ) {
+          performUnitOfWork();
+        }
+
+        if (works.length) {
+          requestIdleCallback(workLoop, { timeout: 1000 });
+        }
+
+        console.log('任务执行后，帧剩余时间：', idleDeadline.timeRemaining());
+      }
+
+      // 开始调度
+      requestIdleCallback(workLoop, { timeout: 100 });
+    </script>
+  </body>
+</html>
