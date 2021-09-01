@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="0延迟setTimeout" />
+    <meta name="description" content="0延迟setTimeout" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      (function () {
+        const timeouts = [];
+        const messageName = 'set-zero-timeout';
+
+        function handleMessage(event) {
+          if (event.source === window && event.data === messageName) {
+            event.stopPropagation();
+            if (timeouts.length > 0) {
+              const fn = timeouts.shift();
+              fn();
+            }
+          }
+        }
+
+        function setZeroTimeout(fn) {
+          timeouts.push(fn);
+          window.postMessage(messageName, '*');
+        }
+
+        // 监听message事件
+        window.addEventListener('message', handleMessage, true);
+
+        // 挂载API至window
+        window.setZeroTimeout = setZeroTimeout;
+      })();
+
+      setZeroTimeout(() => {
+        console.log('hello');
+      });
+    </script>
+  </body>
+</html>
