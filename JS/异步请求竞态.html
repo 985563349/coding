@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="异步请求竞态" />
+    <meta name="description" content="异步请求竞态" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>异步请求竞态</title>
+  </head>
+  <body>
+    <h2>中断请求</h2>
+    <button onclick="request()">request</button>
+    <button onclick="stop()">stop</button>
+
+    <script>
+      let controller1;
+
+      function request() {
+        controller1 = new AbortController();
+
+        fetch(
+          'https://www.fastmock.site/mock/49e1f0d31ddb56e73a02c99c298e4e0d/test/abort',
+          { signal: controller1.signal }
+        )
+          .then((response) => response.json())
+          .then(console.log)
+          .catch(console.log);
+      }
+
+      function stop() {
+        controller1.abort();
+      }
+    </script>
+
+    <h2>请求竞态</h2>
+    <input type="text" oninput="handleInput(event)" />
+
+    <script>
+      let controller2;
+
+      function handleInput(event) {
+        if (controller2) {
+          controller2.abort();
+        }
+        controller2 = new AbortController();
+
+        const search = event.target.value;
+        fetch(
+          `https://www.fastmock.site/mock/49e1f0d31ddb56e73a02c99c298e4e0d/test/search?search=${search}`,
+          { signal: controller2.signal }
+        )
+          .then((response) => response.json())
+          .then(console.log)
+          .catch(console.log);
+      }
+    </script>
+  </body>
+</html>
