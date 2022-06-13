@@ -18,7 +18,7 @@ function thunkify(fn) {
     var args = new Array(arguments.length);
     var ctx = this;
 
-    // 填充参数
+    // 填充参数
     for (var i = 0; i < arguments.length; i++) {
       args[i] = arguments[i];
     }
@@ -26,7 +26,7 @@ function thunkify(fn) {
     return function (done) {
       var called;
 
-      arg.push(function () {
+      args.push(function () {
         // 防止重复调用
         if (called) return;
         called = true;
