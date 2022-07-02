@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>拖放</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-right: 1px solid #d7dce1;
+      }
+
+      li {
+        display: flex;
+        justify-content: center;
+        padding: 24px 0;
+      }
+
+      .triangle {
+        width: 0;
+        height: 0;
+        border-width: 0px 50px 100px 50px;
+        border-style: solid;
+        border-color: transparent transparent #cc0033 transparent;
+      }
+
+      .round {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: #009966;
+      }
+
+      .rect {
+        width: 100px;
+        height: 100px;
+        background-color: #3366ff;
+      }
+
+      #content {
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <ul id="box">
+        <li>
+          <div class="triangle" draggable="true"></div>
+        </li>
+        <li>
+          <div class="round" draggable="true"></div>
+        </li>
+        <li>
+          <div class="rect" draggable="true"></div>
+        </li>
+      </ul>
+
+      <div id="content"></div>
+    </div>
+
+    <script>
+      let dragged = null;
+
+      document.addEventListener('dragstart', (e) => {
+        dragged = e.target;
+      });
+
+      document.addEventListener('drop', (e) => {
+        e.preventDefault();
+
+        if (e.target.id === 'content') {
+          const widget = document.createElement(dragged.nodeName);
+          widget.className = dragged.className;
+
+          const x = e.clientX - e.target.offsetLeft - dragged.clientWidth / 2;
+          const y = e.clientY - e.target.offsetTop - dragged.clientHeight / 2;
+          widget.style = `position: absolute; left: ${x}px; top: ${y}px;`;
+
+          e.target.appendChild(widget);
+        }
+      });
+
+      content.addEventListener('dragover', (e) => {
+        e.preventDefault();
+      });
+    </script>
+  </body>
+</html>
