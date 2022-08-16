@@ -19,7 +19,7 @@ const treeData = {
           key: '0-2-0',
         },
         {
-          title: 'node5',
+          title: 'node45',
           value: '0-2-1',
           key: '0-2-1',
         },
@@ -40,29 +40,26 @@ const treeData = {
   ],
 };
 
-const search = (tree, iteratee) => {
-  let path = null;
+const search = (node, iteratee) => {
+  if (iteratee(node)) {
+    return node;
+  }
 
-  const dfs = (node) => {
-    if (iteratee(node)) {
-      path = node;
-      return true;
-    }
+  if (node.children) {
+    const children = [];
 
-    if (node.children) {
-      for (let i = 0; i < node.children.length; i++) {
-        if (dfs(node.children[i])) {
-          const cloneNode = JSON.parse(JSON.stringify(node));
-          cloneNode.children = [path];
-          path = cloneNode;
-          return true;
-        }
+    for (let i = 0; i < node.children.length; i++) {
+      const current = search(node.children[i], iteratee);
+      if (current) {
+        children.push(current);
       }
     }
-  };
 
-  dfs(tree);
-  return path;
+    return children.length > 0 ? { ...node, children } : null;
+  }
+
+  return null;
 };
 
-console.log(search(treeData, (node) => node.value === '0-2-0'));
+// console.log(search(treeData, (node) => node.value === '0-2-1'));
+console.log(search(treeData, (node) => node.title.includes('node4')));
