@@ -40,16 +40,16 @@ const treeData = {
   ],
 };
 
-const paths = (node, iteratee) => {
+const searchTree = (node, iteratee) => {
   if (iteratee(node)) {
     return node;
   }
 
-  if (node.children) {
+  if (Array.isArray(node.children)) {
     const children = [];
 
     for (let i = 0; i < node.children.length; i++) {
-      const current = paths(node.children[i], iteratee);
+      const current = searchTree(node.children[i], iteratee);
       if (current) {
         children.push(current);
       }
@@ -61,5 +61,5 @@ const paths = (node, iteratee) => {
   return null;
 };
 
-// console.log(paths(treeData, (node) => node.value === '0-2-1'));
-console.log(paths(treeData, (node) => node.title.includes('node4')));
+// console.log(searchTree(treeData, (node) => node.value === '0-2-1'));
+console.log(searchTree(treeData, (node) => node.title.includes('node4')));
