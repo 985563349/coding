@@ -1,14 +1,18 @@
 function curry(func) {
-  const arity = func.length;
-  const args = [];
+  function wrapper() {
+    const prevArgs = arguments;
 
-  return function wrapper() {
-    [].push.apply(args, arguments);
+    return function curried() {
+      const args = [].slice.call(prevArgs);
+      [].push.apply(args, arguments);
 
-    if (args.length < arity) {
-      return wrapper;
-    }
+      if (args.length < func.length) {
+        return wrapper.apply(null, args);
+      } else {
+        return func.apply(this, args);
+      }
+    };
+  }
 
-    return func.apply(this, args);
-  };
+  return wrapper();
 }

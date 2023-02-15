@@ -1,17 +1,14 @@
-// Box
-const Box = (x) => ({
-  map: (f) => Box(f(x)),
-  fold: (f) => f(x),
-  inspect: () => `Box(${x})`,
+const Identity = (x) => ({
+  map: (f) => Identity(f(x)),
+  inspect: () => `Identity(${x})`,
 });
 
 /**
  * Maybe函子:
- * Maybe函子可以对外部的空值情况做处理（控制副作用做载允许的范围）
+ * Maybe函子可以对外部的空值情况做处理（控制副作用只在允许的范围）
  */
 const Maybe = (x) => ({
   map: (f) => Maybe(x == null ? x : f(x)),
-  fold: (f) => f(x),
   inspect: () => `Maybe(${x})`,
 });
 
@@ -22,6 +19,5 @@ const Maybe = (x) => ({
  */
 const Either = (l, r) => ({
   map: (f) => (r == null ? Either(f(l), r) : Either(l, f(r))),
-  fold: (f) => (r == null ? f(l) : f(r)),
   inspect: () => `Either(${l}, ${r})`,
 });

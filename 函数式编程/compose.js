@@ -4,22 +4,25 @@
  * compose(f, g, h) == compose(compose(f, g), h) == compose(f, compose(g, h))
  */
 
-const compose = (...func) => {
-  if (func.length === 0) return () => {};
-
-  if (func.length === 1) return func[0];
-
-  return func.reduce(
-    (a, b) =>
-      (...args) =>
-        a(b(...args))
-  );
+const compose = (...fns) => {
+  return (arg0) => {
+    return fns.reduceRight((arg, fn) => fn(arg), arg0);
+  };
 };
 
-/**
- * 调试：
- * compose(f, trace('g'), g, trace('h'), h)
- */
+// const compose = (...func) => {
+//   if (func.length === 0) return () => {};
+
+//   if (func.length === 1) return func[0];
+
+//   return func.reduce(
+//     (a, b) =>
+//       (...args) =>
+//         a(b(...args))
+//   );
+// };
+
+// 调试：compose(f, trace('g'), g, trace('h'), h)
 const trace = (tag) => (v) => {
   console.log(`${tag}: ${v}`);
   return v;

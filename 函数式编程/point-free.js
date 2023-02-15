@@ -22,4 +22,4 @@ const replace = curry((pattern, replacement, word) => {
 
 const f = compose(replace(/\s+/g, '_'), toLowerCase);
 
-console.log(f('Hello  World'));
+f('Hello  World');
