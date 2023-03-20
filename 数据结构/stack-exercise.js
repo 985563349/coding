@@ -37,9 +37,9 @@ function converter(number, bs) {
   return result;
 }
 
-console.log(converter(100, 2));
-console.log(converter(100, 8));
-console.log(converter(100, 16));
+converter(100, 2);
+converter(100, 8);
+converter(100, 16);
 
 /**
  * 有效的括号
@@ -67,11 +67,7 @@ function isValid(string) {
   for (let v of string) {
     const p = stack.peek();
 
-    if (
-      (p === '(' && v === ')') ||
-      (p === '{' && v === '}') ||
-      (p === '[' && v === ']')
-    ) {
+    if ((p === '(' && v === ')') || (p === '{' && v === '}') || (p === '[' && v === ']')) {
       stack.pop();
     } else {
       stack.push(v);
@@ -81,5 +77,5 @@ function isValid(string) {
   return stack.isEmpty();
 }
 
-console.log(isValid('{}()[]'));
-console.log(isValid('{)(}[}'));
+isValid('{}()[]');
+isValid('{)(}[}');
