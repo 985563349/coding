@@ -2,8 +2,8 @@ class Stack {
   #items = {};
   #length = 0;
 
-  push(value) {
-    this.#items[this.#length] = value;
+  push(node) {
+    this.#items[this.#length] = node;
     this.#length++;
   }
 
@@ -13,10 +13,10 @@ class Stack {
     }
 
     this.#length--;
-    const value = this.#items[this.#length];
+    const node = this.#items[this.#length];
     delete this.#items[this.#length];
 
-    return value;
+    return node;
   }
 
   peek() {
