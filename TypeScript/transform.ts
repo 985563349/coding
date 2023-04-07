@@ -46,7 +46,10 @@ type AppendArguments<Func extends Function, Arg> = Func extends (
 
 type AppendArgumentsResult = AppendArguments<(name: string) => boolean, number>; // => (args_0: string, args_1: number) => boolean
 
-// 索引类型
+/**
+ * 索引类型
+ * 类和对象都属于索引类型
+ */
 type Mapping<Obj extends object> = {
   [P in keyof Obj]: [Obj[P], Obj[P], Obj[P]];
 };
