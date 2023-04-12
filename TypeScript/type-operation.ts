@@ -1,8 +1,18 @@
 /**
+ * 顶层类型与底层类型
+ *
+ *        unknown
+ * number string boolean ...
+ *         never
+ *
+ * unknown为顶层类型，never为底层类型
+ * 下层类型的可以赋值给上层类型，反过来就不行。另外 any 既不是顶层类型也不是底层类型，所以可以给任何类型赋值。
+ */
+
+/**
  * 类型运算
  *
  * 在类型运算中，联合类型取更高层的类型，交叉类型取更低层的类型
- * unknown为顶层类型，never为底层类型
  */
 type A1 = 'a' | never; // => a
 type A2 = 'a' & never; // => never
