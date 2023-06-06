@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="RxJS" />
+    <meta name="description" content="RxJS" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/rxjs/7.8.0/rxjs.umd.js"></script>
+    <title>Operators</title>
+  </head>
+  <body>
+    <script>
+      const { of, from, take, takeWhile, map, filter, reduce, scan } = rxjs;
+
+      function* fibonacci() {
+        let values = [1, 1];
+        while (true) {
+          let [current, next] = values;
+          yield current;
+          values = [next, current + next];
+        }
+      }
+
+      of(1, 2, 3, 4, 5, 6, 7)
+        .pipe(
+          take(2),
+          map(() => 'DINOSAUR')
+        )
+        .subscribe(console.log); // Logs: DINOSAUR, DINOSAUR
+
+      of(1, 2, 3, 4, 5, 6, 7)
+        .pipe(
+          filter((n) => n % 2 === 0),
+          map((n) => n * n)
+        )
+        .subscribe(console.log); // Logs: 4, 16, 36
+
+      from(fibonacci())
+        .pipe(
+          takeWhile((n) => n < 200),
+          reduce((acc, cur) => acc + cur, 0)
+        )
+        .subscribe(console.log); // Logs: 376
+
+      of({ isRunning: true }, { currentSpeed: 100 }, { currentSpeed: 200 }, { distance: 500 })
+        .pipe(scan((cur, next) => ({ ...cur, ...next }), {}))
+        .subscribe(console.log);
+    </script>
+  </body>
+</html>
