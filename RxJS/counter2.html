@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="RxJS" />
+    <meta name="description" content="RxJS" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/rxjs/7.8.0/rxjs.umd.js"></script>
+    <title>Counter</title>
+  </head>
+  <body>
+    <button id="start">Start</button>
+    <span id="count">0</span>
+    <button id="pause">Pause</button>
+    <script>
+      const { fromEvent, interval, skipUntil, takeUntil, scan } = rxjs;
+
+      const startButton = document.querySelector('#start');
+      const pauseButton = document.querySelector('#pause');
+      const count = document.querySelector('#count');
+
+      function setCount(value) {
+        count.innerText = value;
+      }
+
+      const start$ = fromEvent(startButton, 'click');
+      const pause$ = fromEvent(pauseButton, 'click');
+
+      interval(1000)
+        .pipe(
+          skipUntil(start$),
+          scan((acc) => acc + 1, 0),
+          takeUntil(pause$)
+        )
+        .subscribe(setCount);
+    </script>
+  </body>
+</html>

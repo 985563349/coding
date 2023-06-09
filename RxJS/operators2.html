@@ -10,7 +10,20 @@
   </head>
   <body>
     <script>
-      const { of, from, take, takeWhile, map, filter, reduce, scan } = rxjs;
+      const {
+        of,
+        from,
+        take,
+        takeWhile,
+        map,
+        filter,
+        reduce,
+        scan,
+        timer,
+        interval,
+        skipUntil,
+        takeUntil,
+      } = rxjs;
 
       function* fibonacci() {
         let values = [1, 1];
@@ -45,6 +58,14 @@
       of({ isRunning: true }, { currentSpeed: 100 }, { currentSpeed: 200 }, { distance: 500 })
         .pipe(scan((cur, next) => ({ ...cur, ...next }), {}))
         .subscribe(console.log);
+
+      const startingTime = Date.now();
+      const firstTimer$ = timer(2000);
+      const secondTimer$ = timer(7000);
+
+      interval(1000)
+        .pipe(skipUntil(firstTimer$), takeUntil(secondTimer$))
+        .subscribe(() => console.log(Date.now() - startingTime)); // Logs: 2007, 3009, 4011, 5008, 6011
     </script>
   </body>
 </html>

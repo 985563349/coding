@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="RxJS" />
+    <meta name="description" content="RxJS" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/rxjs/7.8.0/rxjs.umd.js"></script>
+    <title>Counter</title>
+  </head>
+  <body>
+    <button id="start">Start</button>
+    <button id="pause">Pause</button>
+    <script>
+      const { fromEvent, interval, delay, throttleTime, debounceTime, throttle, debounce } = rxjs;
+
+      const startButton = document.querySelector('#start');
+      const pauseButton = document.querySelector('#pause');
+
+      const start$ = fromEvent(startButton, 'click');
+      const pause$ = fromEvent(pauseButton, 'click');
+
+      // delay
+      // start$.pipe(delay(2000)).subscribe(() => {
+      //   console.log('click');
+      // });
+
+      // throttleTime
+      // start$.pipe(throttleTime(2000)).subscribe(() => {
+      //   console.log('click');
+      // });
+
+      // debounceTime
+      // start$.pipe(debounceTime(2000)).subscribe(() => {
+      //   console.log('click');
+      // });
+
+      // throttle 点击 start 触发事件，后续需要点击 pause 才能继续触发事件
+      // start$.pipe(throttle(() => pause$)).subscribe(() => {
+      //   console.log('click');
+      // });
+
+      // debounce 点击 start 后，需要点击 pause 才能输出事件
+      // start$.pipe(debounce(() => pause$)).subscribe(() => {
+      //   console.log('click');
+      // });
+
+      // 模拟 throttleTime
+      // start$.pipe(throttle(() => interval(2000))).subscribe(() => {
+      //   console.log('click');
+      // });
+
+      // 模拟 debounceTime
+      start$.pipe(debounce(() => interval(2000))).subscribe(() => {
+        console.log('click');
+      });
+    </script>
+  </body>
+</html>
